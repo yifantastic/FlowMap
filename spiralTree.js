@@ -1,8 +1,8 @@
-﻿var width = 800,
+var width = 800,
     height = 800,
     margin = 20;
 
-//Below is for the balanced binary search tree, but since we are going to process no-huge data, we can use a sorted array instead 
+//Below is for the balanced binary search tree, if the data being processed is small, we can use a sorted array instead 
 var node = function () {
     var node = {
         value: null,
@@ -314,7 +314,7 @@ SpiralTree.prototype.drawSteinerNode = function (point) {
         .attr("d", d3.svg.symbol().type("circle"));
 }
 
-//this function is newly added for make the terminal points are all leaves rather to become a interior point
+//this function is newly added to force terminal points to be leaves rather than becoming interior points
 SpiralTree.prototype.auxCircleJoinPoint = function (point, r, sign) {
     //special situation need to take care
     if (point.r == 0)
@@ -332,7 +332,7 @@ SpiralTree.prototype.auxCircleJoinPoint = function (point, r, sign) {
     else return null;
 }
 
-//this function is try to avoid the overlapping of the steiner node and the terminals
+//this function is used to try to avoid overlapping of the steiner node and the terminals
 SpiralTree.prototype.overlapArea = function (joinPoint, terminal, threshold) {
     if (threshold == undefined) threshold = this.threshold;
     var dis = (joinPoint.x - terminal.x) * (joinPoint.x - terminal.x) + (joinPoint.y - terminal.y) * (joinPoint.y - terminal.y);
@@ -432,7 +432,7 @@ SpiralTree.prototype.drawTree = function () {
         }
         else {
             //This is the join point event
-            //pre-step for processing the really closing steiner node with the terminals
+            //pre-step for processing if the steiner node overlaps with the terminals
             if (this.overlapArea(waveFront.arrayData[joinPoint.parentMinus], waveFront.arrayData[joinPoint.parentPlus], this.threshold*3)) {
                 //first step we need to draw out the two spiral segments and the steiner node
                 this.drawSpiralSegment(waveFront.arrayData[joinPoint.parentPlus], joinPoint.tPlus, "+");
@@ -482,49 +482,3 @@ SpiralTree.prototype.drawTree = function () {
         Array.prototype.shift.call(this.terminals, this.center);
     }
 }
-
-
-
-
-
-//var xrule = spiralTreeLayer.selectAll("g.x")
-//    .data(x.ticks(10))
-//    .enter().append("g")
-//    .attr("class", "x");
-
-//xrule.append("line")
-//    .attr("x1", x)
-//    .attr("x2", x)
-//    .attr("y1", height)
-//    .attr("y2", height + 3);
-
-//xrule.append("text")
-//    .attr("x", x)
-//    .attr("y", height + 3 + 3)
-//    .attr("dy", ".71em")
-//    .attr("text-anchor", "middle")
-//    .text(x.tickFormat(10));
-
-//var yrule = spiralTreeLayer.selectAll("g.y")
-//    .data(y.ticks(10))
-//    .enter().append("g")
-//    .attr("class", "y");
-
-//yrule.append("line")
-//    .attr("x1", 0)
-//    .attr("x2", -3)
-//    .attr("y1", y)
-//    .attr("y2", y);
-
-//yrule.append("text")
-//    .attr("x", -3 - 3)
-//    .attr("y", y)
-//    .attr("dy", ".35em")
-//    .attr("text-anchor", "end")
-//    .text(y.tickFormat(10));
-
-//spiralTreeLayer.append("rect")
-//    .attr("width", width)
-//    .attr("height", height);
-
-
